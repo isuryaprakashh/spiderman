@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Aishwarya's Birthday Adventure! 🕷️</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        /* Previous styles remain the same */
+        body {
+            background: linear-gradient(
+                45deg,
+                #ff91a4 0%,
+                #ffc8d8 25%,
+                #f0f0f0 50%,
+                #ffc8d8 75%,
+                #ff91a4 100%
+            );
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #333;
+        }
+
+        /* Image container styles */
+        .image-container {
+            perspective: 1000px;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-container img {
+            transition: all 0.5s ease;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .birthday-button, .story-button {
+            background: linear-gradient(45deg, #ff4081, #ff6b6b);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .story-button {
+            background: linear-gradient(45deg, #4a90e2, #7c4dff);
+        }
+
+        .birthday-button:hover, .story-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .story-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .story-container.show {
+            max-height: 2000px;
+            transition: max-height 1s ease-in;
+        }
+
+        .story-content {
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .story-container.show .story-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Add these to your existing style section */
+.quiz-container {
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.quiz-container.show {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.quiz-question {
+    background: rgba(255, 255, 255, 0.4);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.quiz-option {
+    background: white;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.quiz-option.correct {
+    background: #4CAF50;
+    color: white;
+}
+
+.quiz-option.wrong {
+    background: #FF5252;
+    color: white;
+}
+
+.quiz-result {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* Spider-Man themed countdown overlay styles */
+.countdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #1d3557 0%, #e63946 100%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    overflow: hidden;
+}
+
+/* Web pattern background */
+.countdown-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 25px 25px, rgba(255,255,255,0.2) 2%, transparent 0%),
+        radial-gradient(circle at 75px 75px, rgba(255,255,255,0.2) 2%, transparent 0%);
+    background-size: 100px 100px;
+    animation: webMove 30s linear infinite;
+    opacity: 0.3;
+}
+
+
+
+.lock-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: spiderSwing 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.chain {
+   display: none;
+}
+
+.countdown-timer {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 5rem;
+    font-weight: 900;  /* Using the heaviest weight available */
+    color: #ffffff;
+    letter-spacing: 2px;
+    
+    padding: 1rem;
+    
+}
+
+/* Add spacing between time units */
+.countdown-timer span {
+    margin: 0 15px;
+    display: inline-block;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .countdown-timer {
+        font-size: 3.2rem;
+        letter-spacing: 2px;
+    }
+    .countdown-timer span {
+        margin: 0 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-timer {
+        font-size: 2.2rem;
+        letter-spacing: 1px;
+    }
+    .countdown-timer span {
+        margin: 0 5px;
+    }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .countdown-timer {
+        font-size: 3.5rem;
+        letter-spacing: 2px;
+        -webkit-text-stroke: 1px #000;
+    }
+    .countdown-timer span {
+        margin: 0 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-timer {
+        font-size: 2.5rem;
+        letter-spacing: 1px;
+    }
+}
+
+.countdown-message {
+    font-size: 1.5rem;
+    max-width: 600px;
+    line-height: 1.6;
+    margin: 2rem auto;
+    color: #fff;
+    background: rgba(29, 53, 87, 0.6);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    transform: perspective(1000px) rotateX(5deg);
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+/* Spider-Man themed animations */
+@keyframes spiderSwing {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+}
+
+@keyframes webMove {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100px); }
+}
+
+@keyframes chainRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Glowing effect for text */
+.countdown-message p {
+    position: relative;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.countdown-message p:last-child {
+    font-weight: bold;
+    color: #e63946;
+    text-shadow: 0 0 15px rgba(230, 57, 70, 0.5);
+}
+
+
+
+    
+    .lock-icon {
+        font-size: 5rem;
+        margin-bottom: 1rem;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    
+   
+    .lock-container:hover {
+        transform: scale(1.05);
+    }
+    /* Responsive styles */
+@media (max-width: 768px) {
+    .lock-container {
+        padding: 2rem;
+    }
+    
+    .lock-icon {
+        font-size: 3rem;
+    }
+}
+
+/* Additional Spider-Man themed elements */
+.spider-web {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0.2;
+}
+
+.spider-web-top-left {
+    top: 0;
+    left: 0;
+    transform: rotate(0deg);
+}
+
+.spider-web-top-right {
+    top: 0;
+    right: 0;
+    transform: rotate(90deg);
+}
+
+.spider-web-bottom-left {
+    bottom: 0;
+    left: 0;
+    transform: rotate(-90deg);
+}
+
+.spider-web-bottom-right {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+}
+#from-batman{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+    </style>
+</head>
+<body>
+    <div id="countdownOverlay" class="countdown-overlay">
+        <div class="spider-web spider-web-top-left">🕸️</div>
+    <div class="spider-web spider-web-top-right">🕸️</div>
+    <div class="spider-web spider-web-bottom-left">🕸️</div>
+    <div class="spider-web spider-web-bottom-right">🕸️</div>
+    
+        <div class="lock-container">
+            <div class="chain"></div>
+            <div class="lock-icon">🔒</div>
+        </div>
+        <div class="countdown-timer" id="countdown"></div>
+        <div class="countdown-message">
+            <p>"Hey Spider-Man! Your birthday surprise is locked away safely in the Batcave. 
+               The security system will deactivate exactly on December 26th at midnight. 
+               Until then, keep swinging through the city, protecting the innocent!</p>
+            <p style="margin-top: 1rem" id="from-batman">- Batman 🦇"</p>
+        </div>
+    </div>
+    <!-- Background Elements -->
+    <div class="spider-web-pattern fixed inset-0 pointer-events-none"></div>
+    <div class="floating-flowers fixed inset-0 pointer-events-none"></div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8 relative z-10">
+        <!-- Hero Section -->
+        <div class="text-center mb-16">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 animate__animated animate__bounceIn">
+                Happy Birthday Aishwarya! 🎉
+            </h1>
+            <p class="text-2xl mb-8 animate__animated animate__fadeIn animate__delay-1s">
+                Your Spider-Verse Birthday Adventure! 🕷️
+            </p>
+            <p class="text-xl mb-4 animate__animated animate__fadeIn animate__delay-2s">
+                From your favorite Batman 🦇
+            </p>
+        </div>
+
+        <!-- Image Section -->
+        <div class="image-container mx-auto mb-16 max-w-2xl">
+            <div class="relative aspect-square rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                <img 
+                    src="celeb.png" 
+                    alt="Birthday Celebration with Batman and Spider-Man" 
+                    class="w-full h-full object-cover"
+                />
+                <!-- Decorative overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
+                
+                <!-- Floating elements -->
+                <div class="absolute top-4 right-4 animate-bounce">🎈</div>
+                <div class="absolute top-8 left-4 animate-pulse">✨</div>
+                <div class="absolute bottom-4 right-8 animate-bounce delay-100">🎈</div>
+            </div>
+            
+            <p class="text-center mt-4 text-gray-800 italic">
+                A magical birthday celebration with your favorite superheroes! 🦇🕷️
+            </p>
+        </div>
+
+        <!-- Interactive Buttons -->
+        <div class="text-center space-y-6">
+            <button id="birthdayButton" class="birthday-button">
+                Click For Birthday Magic! ✨
+            </button>
+            
+            <div>
+                <button id="storyButton" class="story-button mt-8">
+                    Read Your Birthday Story 📖
+                </button>
+            </div>
+        </div>
+
+        <!-- Story Container -->
+        <div id="storyContainer" class="story-container">
+            <div class="story-content">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">A Birthday Adventure 🦇🕷️</h2>
+                
+                <div class="space-y-4 text-gray-800 leading-relaxed">
+                    <!-- Story paragraphs remain the same -->
+                    <p>On a magical evening in Gotham City, as the sun painted the sky in shades of pink and gold, 
+                    Batman received an unexpected call. His friend Aishwarya's birthday was approaching, but 
+                    something strange was happening in the city...</p>
+
+                    <p>"Hey Batman!" A familiar voice echoed through the air. It was Spider-Man, swinging by with his 
+                    signature style. "I heard we've got a special birthday to protect today! 🎉"</p>
+
+                    <p>Suddenly, the city's lights began to flicker, and mysterious shadows danced across the buildings. 
+                    The villains had planned to ruin Aishwarya's birthday celebration!</p>
+
+                    <p>Batman, with his dark cape flowing in the wind, and Spider-Man, shooting webs between skyscrapers, 
+                    worked together in perfect harmony. While Spidey caught the troublemakers in his webs, Batman used 
+                    his gadgets to light up the city with beautiful birthday colors.</p>
+
+                    <p>"You know," Spider-Man quipped while hanging upside down, "this might be the coolest birthday 
+                    patrol ever! Even Tom Holland would be impressed! 🕸️"</p>
+
+                    <p>Batman couldn't help but smile (which was rare!). Together, they had not only saved the city but 
+                    also created the most spectacular birthday light show anyone had ever seen. The buildings sparkled, 
+                    the webs glistened, and the Bat-Signal projected a special birthday message into the clouds.</p>
+
+                    <p>And so, on this special day, two heroes made sure that Aishwarya's birthday would be unforgettable. 
+                    Because sometimes, the best birthday presents come with a side of superhero magic! 🦇✨🕷️</p>
+                </div>
+            </div>
+        </div>
+        <!-- Quiz Section -->
+<div class="text-center mb-8">
+    <button id="quizButton" class="birthday-button">
+        Take the Birthday Quiz! 🎮
+    </button>
+</div>
+
+<div id="quizContainer" class="quiz-container">
+    <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Birthday Superhero Quiz! 🦇🕷️</h2>
+    
+    <div id="quizContent">
+        <!-- Questions will be inserted here by JavaScript -->
+    </div>
+    
+    <div id="quizResult" class="quiz-result"></div>
+    
+    <div class="text-center mt-6">
+        <button id="nextQuestion" class="birthday-button" style="display: none;">
+            Next Question →
+        </button>
+        <button id="restartQuiz" class="birthday-button" style="display: none;">
+            Play Again! 🎮
+        </button>
+    </div>
+</div>
+
+    </div>
+
+    <script>
+    
+            // Countdown Timer functionality
+            function updateCountdown() {
+                const targetDate = new Date('December 26, 2024 00:00:00').getTime();
+                const now = new Date().getTime();
+                const timeLeft = targetDate - now;
+            
+                if (timeLeft <= 0) {
+                    document.getElementById('countdownOverlay').style.display = 'none';
+                    return;
+                }
+            
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+            
+                document.getElementById('countdown').innerHTML = `
+                    <span>${String(days).padStart(2, '0')}d</span>
+                    <span>${String(hours).padStart(2, '0')}h</span>
+                    <span>${String(minutes).padStart(2, '0')}m</span>
+                    <span>${String(seconds).padStart(2, '0')}s</span>
+                `;
+            }
+// Check if we should show the countdown
+const targetDate = new Date('December 26, 2024 00:00:00').getTime();
+const now = new Date().getTime();
+if (now >= targetDate) {
+    document.getElementById('countdownOverlay').style.display = 'none';
+} else {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}
+
+        // All previous JavaScript remains the same
+        function createFloatingFlowers() {
+            const flowers = ['🌸', '🌺', '🌷', '🌹', '🌼', '✨', '🕷️', '🐱'];
+            const container = document.querySelector('.floating-flowers');
+            
+            for(let i = 0; i < 30; i++) {
+                const flower = document.createElement('div');
+                flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.position = 'absolute';
+                flower.style.left = `${Math.random() * 100}vw`;
+                flower.style.top = `${Math.random() * 100}vh`;
+                flower.style.fontSize = `${Math.random() * 20 + 20}px`;
+                flower.style.opacity = '0.7';
+                container.appendChild(flower);
+
+                gsap.to(flower, {
+                    duration: 5 + Math.random() * 5,
+                    y: '+=50',
+                    x: '+=30',
+                    rotation: 360,
+                    opacity: 0.3,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'sine.inOut'
+                });
+            }
+        }
+
+       // Birthday button effect - update this part
+document.getElementById('birthdayButton').addEventListener('click', function() {
+    createBirthdayEffect(50); // Call with 50 elements for a big effect
+});
+
+// Main birthday effect function - make sure there's only one version of this
+function createBirthdayEffect(numElements = 50) {
+    const elements = ['🌸', '🎉', '🌺', '🎈', '🌹', '✨', '🕷️', '🐱'];
+    for(let i = 0; i < numElements; i++) {
+        const element = document.createElement('div');
+        element.textContent = elements[Math.floor(Math.random() * elements.length)];
+        element.style.position = 'fixed';
+        element.style.left = '50%';
+        element.style.top = '50%';
+        element.style.fontSize = '24px';
+        element.style.pointerEvents = 'none';
+        document.body.appendChild(element);
+
+        gsap.to(element, {
+            duration: 2,
+            x: (Math.random() - 0.5) * window.innerWidth,
+            y: (Math.random() - 0.5) * window.innerHeight,
+            rotation: Math.random() * 360,
+            opacity: 0,
+            ease: 'power2.out',
+            onComplete: () => element.remove()
+        });
+    }
+}
+        // Story button functionality
+        document.getElementById('storyButton').addEventListener('click', function() {
+            const container = document.getElementById('storyContainer');
+            container.classList.toggle('show');
+            
+            // Change button text
+            this.textContent = container.classList.contains('show') 
+                ? 'Hide Story 📖' 
+                : 'Read Your Birthday Story 📖';
+        });
+        // Quiz functionality
+const quizQuestions = [
+{
+    question: "What is Spider-Man's real name?",
+    options: ["Peter Parker", "Bruce Wayne", "Clark Kent", "Tony Stark"],
+    correct: 0
+},
+{
+    question: "Which city does Batman protect?",
+    options: ["Metropolis", "Gotham", "Queens", "New York"],
+    correct: 1
+},
+{
+    question: "What is the name of Spider-Man's love interest?",
+    options: ["Lois Lane", "MJ", "Aishwarya", "Diana Prince"],
+    correct: 2
+},
+{
+    question: "Who is the Batman?",
+    options: ["Ben Affleck", "Surya", "Robert Pattinson", "All of them are Real Batmans"],
+    correct: 3
+}
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+document.getElementById('quizButton').addEventListener('click', function() {
+document.getElementById('quizContainer').classList.add('show');
+this.style.display = 'none';
+showQuestion(currentQuestion);
+});
+
+function showQuestion(index) {
+const quizContent = document.getElementById('quizContent');
+const question = quizQuestions[index];
+
+let html = `
+    <div class="quiz-question">
+        <h3 class="text-xl font-bold mb-4">${question.question}</h3>
+        <div class="space-y-2">
+`;
+
+question.options.forEach((option, i) => {
+    html += `
+        <div class="quiz-option" onclick="checkAnswer(${i})">
+            ${option}
+        </div>
+    `;
+});
+
+html += `
+        </div>
+    </div>
+`;
+
+quizContent.innerHTML = html;
+}
+
+function checkAnswer(selectedIndex) {
+const question = quizQuestions[currentQuestion];
+const options = document.querySelectorAll('.quiz-option');
+
+options.forEach(option => option.style.pointerEvents = 'none');
+
+if (selectedIndex === question.correct) {
+    options[selectedIndex].classList.add('correct');
+    score++;
+    // Add celebration effect for correct answer
+    createBirthdayEffect(10); // Smaller celebration for correct answer
+} else {
+    options[selectedIndex].classList.add('wrong');
+    options[question.correct].classList.add('correct');
+}
+
+if (currentQuestion < quizQuestions.length - 1) {
+    document.getElementById('nextQuestion').style.display = 'inline-block';
+} else {
+    showResult();
+}
+}
+
+document.getElementById('nextQuestion').addEventListener('click', function() {
+currentQuestion++;
+this.style.display = 'none';
+showQuestion(currentQuestion);
+});
+
+function showResult() {
+const resultDiv = document.getElementById('quizResult');
+const percentage = (score / quizQuestions.length) * 100;
+let message = '';
+
+if (percentage === 100) {
+    message = "🎉 Perfect Score! You're a true Batman and Spider-Man fan!";
+    // Big celebration for perfect score
+    createBirthdayEffect(50);
+} else if (percentage >= 75) {
+    message = "🌟 Amazing job! Almost superhero level!";
+} else if (percentage >= 50) {
+    message = "✨ Good effort! Keep watching those superhero movies!";
+} else {
+    message = "🎈 Thanks for playing! Time for a superhero movie marathon!";
+}
+
+resultDiv.innerHTML = `
+    <div class="bg-white/50 p-6 rounded-lg">
+        <h3 class="text-2xl font-bold mb-4">Quiz Complete! 🎉</h3>
+        <p class="text-xl mb-4">Your Score: ${score}/${quizQuestions.length}</p>
+        <p class="text-lg">${message}</p>
+    </div>
+`;
+resultDiv.style.display = 'block';
+document.getElementById('restartQuiz').style.display = 'inline-block';
+}
+
+document.getElementById('restartQuiz').addEventListener('click', function() {
+currentQuestion = 0;
+score = 0;
+this.style.display = 'none';
+document.getElementById('quizResult').style.display = 'none';
+showQuestion(0);
+});
+
+// Added celebration effect for correct answers
+function createBirthdayEffect(numElements = 30) {
+const elements = ['🌟', '✨', '🎉', '🦇', '🕷️'];
+for(let i = 0; i < numElements; i++) {
+    const element = document.createElement('div');
+    element.textContent = elements[Math.floor(Math.random() * elements.length)];
+    element.style.position = 'fixed';
+    element.style.left = '50%';
+    element.style.top = '50%';
+    element.style.fontSize = '24px';
+    element.style.pointerEvents = 'none';
+    document.body.appendChild(element);
+
+    gsap.to(element, {
+        duration: 1.5,
+        x: (Math.random() - 0.5) * window.innerWidth,
+        y: (Math.random() - 0.5) * window.innerHeight,
+        rotation: Math.random() * 360,
+        opacity: 0,
+        ease: 'power2.out',
+        onComplete: () => element.remove()
+    });
+}
+}
+
+        // Initialize
+        createFloatingFlowers();
+    </script>
+</body>
+</html>
