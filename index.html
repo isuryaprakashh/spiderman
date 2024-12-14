@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Countdown</title>
+    <title>Batman Countdown</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
     <style>
         * {
@@ -20,54 +20,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
             padding: 20px;
-        }
-
-        #tv-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2em;
-            color: #0f0;
-            font-family: monospace;
-            z-index: 100;
-            animation: glitch 0.2s infinite;
-        }
-
-        @keyframes glitch {
-            0%, 100% {
-                clip-path: inset(0 0 0 0);
-                transform: translate(0);
-            }
-            33% {
-                clip-path: inset(50% 0 0 0);
-                transform: translate(-5px, 0);
-            }
-            66% {
-                clip-path: inset(0 0 50% 0);
-                transform: translate(5px, 0);
-            }
-        }
-
-        .glitch-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            animation: glitch-lines 0.2s infinite;
-            z-index: 99;
-        }
-
-        .wrap {
-            display: none;
         }
 
         h1 {
@@ -217,9 +170,8 @@
     </style>
 </head>
 <body>
-   
     <div class="wrap">
-        <h1><strong>Countdown</strong></h1>
+        <h1>Batman <strong>Countdown</strong></h1>
         
         <div class="countdown">
             <div class="bloc-time days" data-init-value="0">
@@ -250,24 +202,18 @@
 
         <div class="message">
             <p><strong>Batcave Secure Transmission:</strong></p>
-            <p>"This is a high-priority alert. The countdown indicates a critical event occurring on <strong>December 26th</strong>. Gotham's safety depends on this mission."</p>
+            <p>"This is a high-priority alert. The countdown indicates a critical event occurring on <strong>December 14th at 5:52 PM</strong>."</p>
             <p>Monitor closely, stay vigilant, and act accordingly.</p>
             <p><em>- Batman</em></p>
         </div>
     </div>
 
     <script>
-        function showWrap() {
-            document.querySelector('#tv-screen').style.display = 'none';
-            document.querySelector('.glitch-lines').style.display = 'none';
-            document.querySelector('.wrap').style.display = 'block';
-        }
-
-        setTimeout(showWrap, 3000);
-
         function updateCountdown() {
-            const targetDate = new Date(new Date().getFullYear(), 11, 26, 0, 0, 0);
             const now = new Date();
+
+            // Set target date to December 14th at 5:52 PM
+            const targetDate = new Date(now.getFullYear(), 11, 14, 17, 52, 0);
 
             const difference = targetDate - now;
 
