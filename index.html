@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batman Countdown</title>
+    <title>Countdown</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
     <style>
         * {
@@ -20,7 +20,12 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow: hidden;
             padding: 20px;
+        }
+
+        .wrap {
+            display: block;
         }
 
         h1 {
@@ -171,7 +176,7 @@
 </head>
 <body>
     <div class="wrap">
-        <h1>Batman <strong>Countdown</strong></h1>
+        <h1><strong>Countdown</strong></h1>
         
         <div class="countdown">
             <div class="bloc-time days" data-init-value="0">
@@ -202,7 +207,7 @@
 
         <div class="message">
             <p><strong>Batcave Secure Transmission:</strong></p>
-            <p>"This is a high-priority alert. The countdown indicates a critical event occurring on <strong>December 14th at 5:52 PM</strong>."</p>
+            <p>"This is a high-priority alert. The countdown indicates a critical event occurring on <strong>December 26th</strong>. Gotham's safety depends on this mission."</p>
             <p>Monitor closely, stay vigilant, and act accordingly.</p>
             <p><em>- Batman</em></p>
         </div>
@@ -210,10 +215,8 @@
 
     <script>
         function updateCountdown() {
+            const targetDate = new Date(new Date().getFullYear(), 11, 26, 0, 0, 0);
             const now = new Date();
-
-            // Set target date to December 14th at 5:52 PM
-            const targetDate = new Date(now.getFullYear(), 11, 14, 17, 52, 0);
 
             const difference = targetDate - now;
 
