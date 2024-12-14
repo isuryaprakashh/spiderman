@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batman Countdown</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #121212;
+            color: #f2f2f2;
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        #tv-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #0f0;
+            font-family: monospace;
+            z-index: 100;
+            animation: glitch 0.2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% {
+                clip-path: inset(0 0 0 0);
+                transform: translate(0);
+            }
+            33% {
+                clip-path: inset(50% 0 0 0);
+                transform: translate(-5px, 0);
+            }
+            66% {
+                clip-path: inset(0 0 50% 0);
+                transform: translate(5px, 0);
+            }
+        }
+
+        .glitch-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: glitch-lines 0.2s infinite;
+            z-index: 99;
+        }
+
+        .wrap {
+            display: none;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            text-align: center;
+            font: 300 2.25em 'Lato', sans-serif;
+            text-transform: uppercase;
+            color: #ea4c4c;
+            animation: fadeIn 2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Reduced gap between timer blocks */
+            white-space: nowrap; /* Prevents line breaks */
+            flex-wrap: nowrap;   /* Ensures the countdown items stay in a single line */
+            margin-bottom: 20px;
+        }
+
+        .bloc-time {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .count-title {
+            display: block;
+            margin-bottom: 10px; /* Reduced margin */
+            font: normal 0.94em 'Lato', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .figure {
+            position: relative;
+            height: 80px; /* Reduced height */
+            width: 70px;  /* Reduced width */
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .2), inset 2px 4px 0 0 rgba(255, 255, 255, .08);
+            margin: 0 5px;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;     /* Center vertically */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .figure > span {
+            font: normal 3.5em/80px 'Lato', sans-serif; /* Reduced font size more */
+            font-weight: 700;
+            color: #ea4c4c;
+            text-align: center;
+            line-height: 1; /* Ensure proper vertical alignment */
+        }
+
+        .figure > span:active {
+            transform: scale(1.2);
+        }
+
+        .message {
+            margin-top: 30px;
+            background-color: #2c2c2c;
+            color: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1em;
+            line-height: 1.6;
+            border: 2px solid #ea4c4c;
+            text-align: left;
+            animation: slideIn 1s ease-out;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+            box-sizing: border-box;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .message p {
+            margin: 10px 0;
+        }
+
+        .message strong {
+            color: #ea4c4c;
+        }
+
+        @media (max-width: 768px) {
+            .countdown {
+                flex-direction: row; /* Ensures countdown stays in one line */
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .figure {
+                height: 60px; /* Reduced height for mobile */
+                width: 55px;  /* Reduced width for mobile */
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .message {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .count-title {
+                font-size: 0.8em;
+            }
+
+            .figure > span {
+                font-size: 3em; /* Further reduced font size for mobile */
+            }
+
+            .message {
+                max-width: 100%;
+                font-size: 0.9em;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="tv-screen">INITIALIZING...</div>
+    <div class="glitch-lines"></div>
+    <div class="wrap">
+        <h1>Batman <strong>Countdown</strong></h1>
+        
+        <div class="countdown">
+            <div class="bloc-time days" data-init-value="0">
+                <span class="count-title">Days</span>
+                <div class="figure">
+                    <span class="top">0</span>
+                </div>
+            </div>
+            <div class="bloc-time hours" data-init-value="0">
+                <span class="count-title">Hours</span>
+                <div class="figure">
+                    <span class="top">0</span>
+                </div>
+            </div>
+            <div class="bloc-time min" data-init-value="0">
+                <span class="count-title">Minutes</span>
+                <div class="figure">
+                    <span class="top">0</span>
+                </div>
+            </div>
+            <div class="bloc-time sec" data-init-value="0">
+                <span class="count-title">Seconds</span>
+                <div class="figure">
+                    <span class="top">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="message">
+            <p><strong>Batcave Secure Transmission:</strong></p>
+            <p>"This is a high-priority alert. The countdown indicates a critical event occurring on <strong>December 26th</strong>. Gotham's safety depends on this mission."</p>
+            <p>Monitor closely, stay vigilant, and act accordingly.</p>
+            <p><em>- Batman</em></p>
+        </div>
+    </div>
+
+    <script>
+        function showWrap() {
+            document.querySelector('#tv-screen').style.display = 'none';
+            document.querySelector('.glitch-lines').style.display = 'none';
+            document.querySelector('.wrap').style.display = 'block';
+        }
+
+        setTimeout(showWrap, 3000);
+
+        function updateCountdown() {
+            const targetDate = new Date(new Date().getFullYear(), 11, 26, 0, 0, 0);
+            const now = new Date();
+
+            const difference = targetDate - now;
+
+            if (difference < 0) {
+                window.location.href = "bday.html"; // Redirect when the countdown ends
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.querySelector('.days .top').textContent = days;
+            document.querySelector('.hours .top').textContent = hours;
+            document.querySelector('.min .top').textContent = minutes;
+            document.querySelector('.sec .top').textContent = seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
